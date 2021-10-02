@@ -26,7 +26,7 @@ static char *colors[][3] = {
        [SchemeNorm] = { normfgcolor, normbgcolor, normbordercolor },
        [SchemeSel]  = { selfgcolor,  selbgcolor,  selbordercolor  },
 };
-
+
 /* tagging */
 static const char *tags[] = { "", "", "", "", "5", "", "", "", "" };
 
