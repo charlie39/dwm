@@ -10,7 +10,7 @@ static const unsigned int gappov    = 30;       /* vert outer gap between window
 static const int smartgaps          = 0;        /* 1 means no outer gap when there is only one window */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const char *fonts[]          = { "Fira Code:bold:size=10","Symbols Nerd Font:bold:size=14:autohint=true", "JoyPixels:pixelsize=12"  };
+static const char *fonts[]          = { "Fira Code:bold:size=10","Symbols Nerd Font:bold:size=14:autohint=true", "Custom:bold:size=14", "JoyPixels:pixelsize=12"  };
 static char dmenufont[]     	    = "monospace:size=10";
 /* static char normbgcolor[]           = "#00cd00"; */
 static char normbgcolor[]           = "#222222";
@@ -27,9 +27,21 @@ static char *colors[][3] = {
        [SchemeSel]  = { selfgcolor,  selbgcolor,  selbordercolor  },
 };
 
+typedef struct {
+    const char *name;
+    const void *cmd;
+} Sp;
+
+/* commands */
+static const char scratchpadname[] = { "scratchpad" };
+static const char *scratchpadcmd[] = { "st", "-t", scratchpadname, "-g", "120x34", NULL };
+/* static const char *spcmd1[] = { "st", "-t","scratchpad", "-g", "120x34", NULL };
+static const char *spcmd2[] = { "st", "-n","spcalc", "-g", "80x34", "-e", "bc -l", NULL };
+*/
+
 /* tagging*/
-static const char *tags[] = { "", "", "", "", "", "", "", "", "" };
-// static const char *tags[] = { "", "", "", "", "5", "", "", "", "" };
+static const char *tags[] = { "", "", "", "", "", "", "", "", "" };
+// static const char *tags[] = { "", "", "", "", "5", "", "", "", "" };
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -37,8 +49,11 @@ static const Rule rules[] = {
 	 *	WM_NAME(STRING) = title
 	 */
 	/* class      instance    title       tags mask     isfloating   isterminal noswallow monitor */
-	{ "Gimp",     NULL,       NULL,       1 << 8,       0,           0,         0,        -1 },
-	{ "St",       NULL,       NULL,       0,            0,           1,         0,        -1 },
+	// { "St",       NULL,       NULL,       0,            0,           1,         0,        -1 },
+	{ NULL,      "scratchpad",   NULL,       0,     1,           1,         0,        -1 },
+	{ NULL,      "spcalc",       NULL,       1,     1,           1,         0,        -1 },
+	/* { "Gimp",	  NULL,      NULL,       1 << 8,       1,                                -1 },
+	{ "Firefox",  NULL,       NULL,       1 << 3,       0,                                -1 }, */
 };
 
 /* layout(s) */
@@ -81,15 +96,12 @@ static const Layout layouts[] = {
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 
-/* commands */
+
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
 static const char *termcmd[]  = { "st", NULL };
 static const char *termcmd1[]  = { "kitty", NULL };
 static const char *termcmd2[]  = { "alacritty", NULL };
-static const char scratchpadname[] = "scratchpad";
-static const char *scratchpadcmd[] = { "st", "-t", scratchpadname, "-g", "120x34", NULL };
-
 #include <X11/XF86keysym.h>
 #include "shiftview.c"
 static Key keys[] = {
@@ -164,14 +176,16 @@ static Key keys[] = {
 	/* { MODKEY|ShiftMask,	XK_apostrophe,		spawn,			SHCMD("") }, */
 	{ MODKEY,				XK_Return,			spawn,			{.v = termcmd } },
 	{ MODKEY|ShiftMask,		XK_Return,			togglescratch,	{.v = scratchpadcmd } },
+	// { MODKEY|ShiftMask,		XK_Return,			togglescratch,	{.ui = 0 } },
 	{ MODKEY1,				XK_Return,			spawn,			{.v = termcmd1 } },
 	{ MODKEY1|ShiftMask,	XK_Return,			spawn,			{.v = termcmd2 } },
 
+	{ MODKEY,				XK_c,				spawn,			SHCMD("st -e bc -l") },
+	// { MODKEY,				XK_c,				togglescratch,	{.ui = 1 } },
 	{ MODKEY,				XK_z,				incrgaps,		{.i = +1 } },
 	{ MODKEY|ShiftMask,		XK_z,				incrgaps,		{.i = -1 } },
 	/* { MODKEY,			XK_x,				spawn,			SHCMD("") }, */
 	{ MODKEY|ShiftMask,		XK_x,				spawn,			SHCMD("mpc pause && pauseallmpv  && xset dpms force off &&  slock &") },
-	{ MODKEY,				XK_c,				spawn,			SHCMD("st -e bc -l") },
 	{ MODKEY|ShiftMask,		XK_c,				spawn,			SHCMD("webcam") },
 	{ MODKEY,				XK_v,				spawn,			SHCMD("st -e $EDITOR -c \"VimwikiIndex\"") },
 	{ MODKEY|ShiftMask,		XK_v,				spawn,			SHCMD("{ killall xcompmgr || setsid xcompmgr & } ; xwallpaper --zoom ~/.config/wall.png") },
@@ -215,7 +229,7 @@ static Key keys[] = {
 	{ MODKEY,				XK_Print,			spawn,			SHCMD("dmenurecord") },
 	{ MODKEY|ShiftMask,		XK_Print,			spawn,			SHCMD("dmenurecord kill") },
 	{ MODKEY,				XK_Delete,			spawn,			SHCMD("dmenurecord kill") },
-	{ MODKEY,				XK_Scroll_Lock,		spawn,			SHCMD("killall screenkey || screenkey &") },
+	{ MODKEY,				XK_Num_Lock,		spawn,			SHCMD("killall screenkey || screenkey &") },
 
 	{ 0, XF86XK_AudioMute,						spawn,			SHCMD("pamixer -t; kill -44 $(pidof dwmblocks)") },
 	{ 0, XF86XK_AudioRaiseVolume,				spawn,			SHCMD("pamixer --allow-boost -i 3; kill -44 $(pidof dwmblocks)") },
