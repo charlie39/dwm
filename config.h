@@ -146,14 +146,14 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,		XK_u,				setlayout,		{.v = &layouts[5]} },
 	{ MODKEY,				XK_i,				setlayout,		{.v = &layouts[6]} },
 	{ MODKEY|ShiftMask,		XK_i,				setlayout,		{.v = &layouts[7]} },
-	{ MODKEY,				XK_o,				incnmaster,			{.i = +1 } },
-	{ MODKEY|ShiftMask,		XK_o,				incnmaster,			{.i = -1 } },
+	{ MODKEY,				XK_o,				incnmaster,		{.i = +1 } },
+	{ MODKEY|ShiftMask,		XK_o,				incnmaster,		{.i = -1 } },
 	{ MODKEY,				XK_p,				spawn,			SHCMD("mpc toggle") },
 	{ MODKEY|ShiftMask,		XK_p,				spawn,			SHCMD("mpc pause ; pauseallmpv") },
 	{ MODKEY,				XK_bracketleft,		spawn,			SHCMD("mpc seek -10") },
 	{ MODKEY|ShiftMask,		XK_bracketleft,		spawn,			SHCMD("mpc seek -120") },
 	{ MODKEY,				XK_bracketright,	spawn,			SHCMD("mpc seek +10") },
-	{ MODKEY|ShiftMask,		XK_bracketright,	spawn,			SHCMD("mpc seek +120") },
+	{ MODKEY|ShiftMask,		XK_bracketright,	spawn,			SHCMD("mpc seek  +120") },
 	{ MODKEY,				XK_backslash,		view,			{0} },
 	/* { MODKEY|ShiftMask,	XK_backslash,		spawn,			SHCMD("") }, */
 
@@ -176,7 +176,7 @@ static Key keys[] = {
 	/* { MODKEY|ShiftMask,	XK_apostrophe,		spawn,			SHCMD("") }, */
 	{ MODKEY,				XK_Return,			spawn,			{.v = termcmd } },
 	{ MODKEY|ShiftMask,		XK_Return,			togglescratch,	{.v = scratchpadcmd } },
-	// { MODKEY|ShiftMask,		XK_Return,			togglescratch,	{.ui = 0 } },
+	// { MODKEY|ShiftMask,		XK_Return,			togglescratch,	{.u = 0 } },
 	{ MODKEY1,				XK_Return,			spawn,			{.v = termcmd1 } },
 	{ MODKEY1|ShiftMask,	XK_Return,			spawn,			{.v = termcmd2 } },
 
@@ -219,13 +219,13 @@ static Key keys[] = {
 	{ MODKEY,				XK_F8,				spawn,			SHCMD("mailsync") },
 	{ MODKEY,				XK_F9,				spawn,			SHCMD("dmenumount") },
 	{ MODKEY,				XK_F10,				spawn,			SHCMD("dmenuumount") },
-	/* { MODKEY,			XK_F11,				spawn,			SHCMD("st -e htop | lolcat") }, */
-	/* { MODKEY,			XK_F12,				spawn,			SHCMD("") }, */
+	{ MODKEY,			    XK_F11,				spawn,			SHCMD("st -e htop") },
+	{ MODKEY,			    XK_F12,				spawn,			SHCMD("st -e crontab -e") },
 	{ MODKEY,				XK_space,			zoom,			{0} },
 	{ MODKEY|ShiftMask,		XK_space,			togglefloating,	{0} },
 
 	{ 0,					XK_Print,			spawn,			SHCMD("maim pic-full-$(date '+%y%m%d-%H%M-%S').png") },
-	{ ShiftMask,			XK_Print,			spawn,			SHCMD("maimpick") },
+	{ ShiftMask,			XK_Print,			spawn,			SHCMD("screenshot") },
 	{ MODKEY,				XK_Print,			spawn,			SHCMD("dmenurecord") },
 	{ MODKEY|ShiftMask,		XK_Print,			spawn,			SHCMD("dmenurecord kill") },
 	{ MODKEY,				XK_Delete,			spawn,			SHCMD("dmenurecord kill") },
@@ -237,7 +237,7 @@ static Key keys[] = {
 	{ 0, XF86XK_AudioPrev,						spawn,			SHCMD("mpc prev") },
 	{ 0, XF86XK_AudioNext,						spawn,			SHCMD("mpc next") },
 	{ 0, XF86XK_AudioPause,						spawn,			SHCMD("mpc pause") },
-	{ 0, XF86XK_AudioPlay,						spawn,			SHCMD("mpc play") },
+	{ 0, XF86XK_AudioPlay,						spawn,			SHCMD("mpc toggle") },
 	{ 0, XF86XK_AudioStop,						spawn,			SHCMD("mpc stop") },
 	{ 0, XF86XK_AudioRewind,					spawn,			SHCMD("mpc seek -10") },
 	{ 0, XF86XK_AudioForward,					spawn,			SHCMD("mpc seek +10") },
@@ -256,8 +256,10 @@ static Key keys[] = {
 	{ 0, XF86XK_TouchpadToggle,					spawn,			SHCMD("(synclient | grep 'TouchpadOff.*1' && synclient TouchpadOff=0) || synclient TouchpadOff=1") },
 	{ 0, XF86XK_TouchpadOff,					spawn,			SHCMD("synclient TouchpadOff=1") },
 	{ 0, XF86XK_TouchpadOn,						spawn,			SHCMD("synclient TouchpadOff=0") },
-	{ 0, XF86XK_MonBrightnessUp,				spawn,			SHCMD("xbacklight -inc 5") },
-	{ 0, XF86XK_MonBrightnessDown,				spawn,			SHCMD("xbacklight -dec 5") },
+	/* { 0, XF86XK_MonBrightnessUp,				spawn,			SHCMD("xbacklight -inc 5") },
+	{ 0, XF86XK_MonBrightnessDown,				spawn,			SHCMD("xbacklight -dec 5") }, */
+	{ 0, XF86XK_MonBrightnessUp,				spawn,			SHCMD("light -A 5") },
+	{ 0, XF86XK_MonBrightnessDown,				spawn,			SHCMD("light -U 5") },
 };
 
 /* button definitions */
