@@ -9,8 +9,7 @@ static const unsigned int gappov    = 30;       /* vert outer gap between window
 static const int smartgaps          = 1;        /* 1 means no outer gap when there is only one window */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-// static const char *fonts[]          = { "Fira Code:bold:size=14","Symbols Nerd Font:bold:size=14:autohint=true", "Custom:bold:size=14", "JoyPixels:pixelsize=12"  };
-static const char *fonts[]          = { "Fira Code:bold:size=10","Symbols Nerd Font:bold:size=14:autohint=true","Custom:bold:size=14","JoyPixels:pixelsize=12" };
+static const char *fonts[]          = { "Fira Code:bold:size=10","JetBrainsMono Nerd Font Mono:size=16", "Custom:bold:size=14", "JoyPixels:pixelsize=12"  };
 static char dmenufont[]     	    = "monospace:size=10";
 /* static char normbgcolor[]           = "#00cd00"; */
 static char normbgcolor[]           = "#222222";
