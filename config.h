@@ -39,7 +39,7 @@ static const char *spcmd2[] = { "st", "-n","spcalc", "-g", "80x34", "-e", "bc -l
 */
 
 /* tagging*/
-static const char *tags[] = { "", "", "", "", "", "", "", "", "" };
+static const char *tags[] = { "", "", "", "", "", "", "", "", "" };
 // static const char *tags[] = { "", "", "", "", "5", "", "", "", "" };
 
 static const Rule rules[] = {
