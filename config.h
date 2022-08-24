@@ -211,6 +211,7 @@ static Key keys[] = {
 
 	{ MODKEY,				XK_F1,				spawn,			SHCMD("groff -mom /usr/local/share/dwm/larbs.mom -Tpdf | zathura -") },
 	{ MODKEY,				XK_F2,				quit,			{1} },
+	{ MODKEY|ShiftMask,		XK_F2,				spawn,			SHCMD("chxdefaults") },
 	{ MODKEY,				XK_F3,				spawn,			SHCMD("st -e sudo wifi-menu") },
 	{ MODKEY,				XK_F4,				spawn,			SHCMD("displayselect") },
 	{ MODKEY,				XK_F5,				xrdb,			{.v = NULL } },
